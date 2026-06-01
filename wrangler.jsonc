@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bibox",
+  "compatibility_date": "2026-06-01",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "bibox"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
