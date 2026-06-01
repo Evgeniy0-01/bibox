@@ -1,8 +1,0 @@
-name = "bibox-api"
-main = "src/index.js"
-compatibility_date = "2024-01-01"
-
-[[d1_databases]]
-binding = "bibox_db"
-database_name = "bibox-db"
-database_id = "04ea3f29-ac09-467b-a492-ed01e7589c8d"
