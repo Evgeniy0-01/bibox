@@ -1,0 +1,60 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  email TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  bix INTEGER DEFAULT 10,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS avatars (
+  user_id INTEGER PRIMARY KEY,
+  body TEXT DEFAULT '#f4c2a0',
+  hair TEXT DEFAULT '#3b1f05',
+  cloth TEXT DEFAULT '#3498db',
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS inventory (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  item_id TEXT NOT NULL,
+  equipped INTEGER DEFAULT 0,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS clicker (
+  user_id INTEGER PRIMARY KEY,
+  clicks REAL DEFAULT 0,
+  click_power INTEGER DEFAULT 1,
+  cps INTEGER DEFAULT 0,
+  upgrades TEXT DEFAULT '{}',
+  total_bix INTEGER DEFAULT 0,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS sessions (
+  token TEXT PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS friends (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  friend_id INTEGER NOT NULL,
+  UNIQUE(user_id, friend_id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (friend_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS friend_requests (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  from_id INTEGER NOT NULL,
+  to_id INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(from_id, to_id),
+  FOREIGN KEY (from_id) REFERENCES users(id),
+  FOREIGN KEY (to_id) REFERENCES users(id)
+);
